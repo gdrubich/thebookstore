@@ -54,8 +54,14 @@ class Language(models.Model):
 
 
 class BookInstance(models.Model):
+    STATES = (
+        ('av', 'Available'),
+        ('ret', 'Retired'),
+        ('res', 'Reserved'),
+    )
     unique_id = models.CharField(max_length=10)
     book = models.ForeignKey('books.Book')
+    status = models.CharField(choices=STATES, max_length=20)
 
     def __unicode__(self):
-        return '{}'.format(self.book)
+        return '{} {}'.format(self.book, self.unique_id)

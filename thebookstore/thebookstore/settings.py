@@ -27,24 +27,25 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'books',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-    'books',
-    'loans',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'django_countries',
+    'loans',
 ]
 
 MIDDLEWARE = [
@@ -87,7 +88,59 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+ACCOUNT_ADAPTER = ("allauth.account.adapter.DefaultAccountAdapter")
 
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
+
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = None
+
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+
+ACCOUNT_EMAIL_VERIFICATION = None
+
+# ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Site]"
+
+LOGIN_REDIRECT_URL = "/"
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"
+
+ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180
+
+ACCOUNT_EMAIL_MAX_LENGTH = 254
+
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile', 'user_friends'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': lambda request: 'es_AR',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.5',
+    }
+}
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -133,3 +186,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Additional locations of static files
+
+STATICFILES_DIRS = (
+    os.path.normpath(os.path.join(os.path.dirname(__file__),
+                                  'static')),
+)
