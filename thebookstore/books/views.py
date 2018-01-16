@@ -8,4 +8,4 @@ def index(request):
     context = {
         'user': request.user,
     }
-    return render(request, 'index.html', context)
+    return render(request, 'books/index.html', context)
