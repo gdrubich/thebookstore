@@ -33,7 +33,6 @@ SITE_ID = 1
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'books',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -46,6 +45,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'django_countries',
     'loans',
+    'books',
+    'bootstrap3',
 ]
 
 MIDDLEWARE = [
@@ -60,10 +61,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'thebookstore.urls'
 
+PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(PACKAGE_ROOT, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

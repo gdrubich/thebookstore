@@ -9,3 +9,8 @@ def index(request):
         'user': request.user,
     }
     return render(request, 'books/index.html', context)
+
+
+def booklist(request):
+    context = {}
+    return render(request, 'books/booklist.html', context)
