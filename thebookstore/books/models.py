@@ -19,7 +19,7 @@ class Book(models.Model):
     genre = models.ForeignKey('books.Genre')
     language = models.ForeignKey('books.Language')
     cover_img = models.ImageField(
-        upload_to=cover_upload_path, default='/covers/default_cover.jpeg', null=True)
+        upload_to=cover_upload_path, default='/cover/default_cover.jpeg', null=True)
 
     # class Meta:
     #   pass

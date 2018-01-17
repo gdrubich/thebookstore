@@ -4,14 +4,14 @@
 <div class="jumbotron">
       <div class="container">
         {% if user.is_authenticated %}
-          <h1>Welcome, user_display user!</h1>
+          <h1>Welcome, {{ user }}!</h1>
           <p></p>
         {% else %}
           <h1>Welcome!</h1>
           <p>This is a webpage where you can loan books, have fun!</p>
+          <a href="{% url 'account_login' %}">Login</a> or <a href="{% url 'account_signup' %}">Sign up</a>
         {% endif %} 
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Go to bookstore &raquo;</a></p>
-        <a href="{% url 'account_login' %}">Login</a>
+        <p><a class="btn btn-primary btn-lg" href="{% url 'books:booklist' %}" role="button">Go to bookstore &raquo;</a></p>
       </div>
     </div>
 {% endblock %}

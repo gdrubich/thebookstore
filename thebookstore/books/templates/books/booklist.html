@@ -2,22 +2,23 @@
 {% block content %}
 <div class="container">
 	<div class="row">
+		{% for book in books %}
 		<div class="col-3">
 			<div class="card">
-				  <img class="card-img-top" src="..." alt="Card image cap">
+				  <img class="card-img-top" src="{{ book.cover_img.url }}" alt="Card image cap">
 				  <div class="card-block">
-				  	<h4 class="card-title"> title</h4> 
-				    <p class="card-text">simple text</p>
-				    <a href="#" class="btn btn-primary">Go somewhere</a>
+				  	<h4 class="card-title">{{ book.title }}</h4> 
+				    <p class="card-text">{{ book.summary }}</p>
+				    <a href="#" class="btn btn-primary">View detail...</a>
 				  </div>
 				  <div class="list-group list-group-flush">
-				  	<li class="list-group-item">Author</li>
-				    <li class="list-group-item">Pages</li>
-				    <li class="list-group-item">Stock</li>
-				  </ul>
-			</div>
+				  	<li class="list-group-item">{{ book.author }}</li>
+				    <li class="list-group-item">{{ book.pages }}</li>
+				    <li class="list-group-item">{{ av }}</li>
+				   </div>
+			 </div>
 		</div>
+		{% endfor %}
 	</div>
 </div>
-
 {% endblock %}
