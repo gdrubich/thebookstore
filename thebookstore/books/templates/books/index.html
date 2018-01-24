@@ -12,6 +12,9 @@
           <a href="{% url 'account_login' %}">Login</a> or <a href="{% url 'account_signup' %}">Sign up</a>
         {% endif %} 
         <p><a class="btn btn-primary btn-lg" href="{% url 'books:booklist' %}" role="button">Go to bookstore &raquo;</a></p>
+        {% if user.is_staff %}
+        <p><a class="btn btn-primary btn-lg" href="{% url 'books:userlist' %}" role="button">Users &raquo;</a></p>
+        {% endif %}
       </div>
     </div>
 {% endblock %}

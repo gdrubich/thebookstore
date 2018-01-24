@@ -13,4 +13,16 @@ class BookLoan(models.Model):
     return_date = models.DateField()
 
     def __unicode__(self):
-        return '{}'.format(self.book, self.user)
+        return '{} {}'.format(self.book, self.user)
+
+
+class Devolution(models.Model):
+    STATES = (
+        ('ontime', 'On Time'),
+        ('late', 'Late'),
+    )
+    loan = models.ForeignKey('loans.BookLoan')
+    status = models.CharField(choices=STATES, max_length=20)
+
+    def __unicode__(self):
+        return '{} {}'.format(self.loan, self.status)

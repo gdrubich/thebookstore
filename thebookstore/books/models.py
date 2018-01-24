@@ -5,6 +5,8 @@ from django.db import models
 
 from django_countries.fields import CountryField
 
+from django.contrib.auth.models import User
+
 
 def cover_upload_path(instance, filename):
     return '/'.join(['cover', instance.genre.name, filename])
@@ -15,7 +17,7 @@ class Book(models.Model):
     summary = models.CharField(max_length=200)
     isbn = models.CharField(max_length=25)
     pages = models.IntegerField()
-    author = models.ForeignKey('books.Author')
+    author = models.ForeignKey('books.Author', related_name='books')
     genre = models.ForeignKey('books.Genre')
     language = models.ForeignKey('books.Language')
     cover_img = models.ImageField(
@@ -23,6 +25,9 @@ class Book(models.Model):
 
     # class Meta:
     #   pass
+    @property
+    def available(self):
+        return self.instances.filter(status='av').count() > 0
 
     def __unicode__(self):
         return '{}'.format(self.title)
@@ -60,8 +65,16 @@ class BookInstance(models.Model):
         ('res', 'Reserved'),
     )
     unique_id = models.CharField(max_length=10)
-    book = models.ForeignKey('books.Book')
+    book = models.ForeignKey('books.Book', related_name='instances')
     status = models.CharField(choices=STATES, max_length=20)
 
     def __unicode__(self):
         return '{} {}'.format(self.book, self.unique_id)
+
+
+@property
+def is_librarian(self):
+    return self.has_perm("loans.add_bookloan")
+
+
+User.add_to_class("is_librarian", is_librarian)

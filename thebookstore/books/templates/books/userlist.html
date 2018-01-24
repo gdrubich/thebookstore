@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		{% for user in users %}
+		<div class="col-3">
+			<div class="card" id="user-card-{{ user.pk }}">
+				  <div class="card-block">
+				  	<h4 class="card-title">{{ user.username }}</h4> 
+				    <p class="card-text">{{ user.first_name }} {{ user.last_name }}</p>
+				    <input type="checkbox" class="librarian-checkbox" data-user="{{ user.pk }}" name="usertype"> Librarian
+				    <a href="#" action="{% url 'books:edit_permission' %}" data-user="{{ user.pk }}" class="btn btn-primary savechanges">Save changes</a>
+				  </div>
+			 </div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script>
+	$(function() {
+		$(".savechanges").click(function(event){
+			event.preventDefault();
+			var userclicked = $(this).data('user');
+			var value = $('.librarian-checkbox[data-user="'+ userclicked +'"]').val()
+			$.ajax({
+				method: 'POST',
+				url: $(this).attr('action'),
+				data: {'user': userclicked,'value': value},
+				success: function(response) {
+					$('#user-card-' + userclicked).hide()
+					if (response.error = []) {
+						alert('El usuario ' + userclicked + ' ahora tiene acceso de Bibliotecario');
+					} else {
+						alert(error)
+					}
+				},
+				error: function(){
+					alert('Error!')
+				}	
+			});
+		});
+	});
+
+</script>
+{% endblock %}
