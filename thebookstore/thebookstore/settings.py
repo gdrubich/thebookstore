@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'loans',
     'books',
     'bootstrap3',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -199,3 +200,5 @@ STATICFILES_DIRS = (
     os.path.normpath(os.path.join(os.path.dirname(__file__),
                                   'static')),
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

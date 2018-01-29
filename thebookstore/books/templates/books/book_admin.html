@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+	<div class="jumbotron">
+	     <div class="container">
+	      <h1> Add books... </h1>
+	      <p><a class="btn btn-primary btn-lg" style="background-color: green" href="{% url 'books:add_book' %}" role="button">Add Book &raquo;</a></p>
+	     </div>
+	</div>
+	<div class="jumbotron">
+	     <div class="container">
+	      <h1> Delete books... </h1>
+	      <p><a class="btn btn-primary btn-lg" style="background-color: red" href="#" role="button">Delete Book &raquo;</a></p>
+	     </div>
+	</div>
+	<div class="jumbotron">
+	     <div class="container">
+	      <h1> Edit books... </h1>
+	      <p><a class="btn btn-primary btn-lg" href="#" role="button">Edit Book &raquo;</a></p>
+	     </div>
+	</div>
+</div>
+
+{% endblock %}

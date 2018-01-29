@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    url(r'^', include('books.urls', namespace='books')),
     url(r'^admin/', admin.site.urls),
+    url(r'^', include('books.urls', namespace='books')),
     url(r'^account/', include('allauth.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

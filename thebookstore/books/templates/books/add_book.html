@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container" style="padding-left: 3px";>
+<h3>Add your movie:</h3>
+{% crispy form %}
+<img src="" id="cover">
+{% endblock %}
+{% block javascript %}
+<script>
+	$(function() {
+		$("input.typeahead").typeahead({
+				onSelect: function(id) {
+					$.ajax({
+						url: "/searchperid",
+						method: "GET",
+						data: {'id': id.value},
+						success: function(response) {
+							$("#id_author").val(response.author);
+							$("#id_pages").val(response.pages);
+							$("#id_language").val(response.language);
+							$("#cover").attr("src",response.img_src);
+						},
+						error: function() {
+							alert('Error!');
+						}
+				    });
+				},
+				ajax: {
+						url: "/searchjson",
+						timeout: 500,
+						displayField: "title",
+						triggerLength: 4,
+						method: "get",
+						valueField: "id",
+						loadingClass: "loading-circle",
+						}
+		});
+	})
+
+// TODO:
+// SPINNER, AUTHOR, LANGUAGE, CRISPY HTML FIELD,
+
+</script>
+{% endblock %}

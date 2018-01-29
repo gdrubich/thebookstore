@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="padding-top: 6px">
+  <div class="row">
+	{% for book in books_list.result %}
+		<div class="col-3">
+			<div class="card">
+				<img class="card-img-top" src="{{ book.volumeInfo.imageLinks.smallThumbnail }}" alt="Card image cap">
+				<div class="card-block">
+				<h4 class="card-title">{{ book.volumeInfo.title }}</h4> 
+				<p class="card-text">{{ book.volumeInfo.description }}</p>
+				</div>
+				<div class="list-group list-group-flush">
+				<li class="list-group-item">{{ book.volumeInfo.authors.0 }}</a></li>
+				<li class="list-group-item">{{ book.volumeInfo.industryIdentifiers.0.type }} {{ book.volumeInfo.industryIdentifiers.0.identifier }}</li>
+				<li class="list-group-item">{{ book.volumeInfo.pageCount }}</li>
+				<li class="list-group-item">{{ book.volumeInfo.averageRating }}</li>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+  </div>
+</div>
+{% endblock %}
