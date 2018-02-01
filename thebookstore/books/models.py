@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.db import models
-
-from django_countries.fields import CountryField
-
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django_countries.fields import CountryField
 
 
 def cover_upload_path(instance, filename):
@@ -66,7 +65,7 @@ class BookInstance(models.Model):
     )
     unique_id = models.CharField(max_length=10)
     book = models.ForeignKey('books.Book', related_name='instances')
-    status = models.CharField(choices=STATES, max_length=20)
+    status = models.CharField(choices=STATES, max_length=20, default='av')
 
     def __unicode__(self):
         return '{} {}'.format(self.book, self.unique_id)
@@ -78,3 +77,5 @@ def is_librarian(self):
 
 
 User.add_to_class("is_librarian", is_librarian)
+
+import signals

@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% load crispy_forms_tags %}
+{% block css %}
+	<link rel="stylesheet" href='{% static "css/preloader.css" %}'>
+{% endblock %}
 {% block content %}
-<div class="container" style="padding-left: 3px";>
-<h3>Add your movie:</h3>
-{% crispy form %}
-<img src="" id="cover">
+<div class="container" id="book-container" style="padding-left: 3px";>
+  <h3>Add your book:</h3>
+  {% crispy form %}
+</div>
+<div class="spinner"></div>
 {% endblock %}
 {% block javascript %}
 <script>
@@ -16,6 +21,8 @@
 						method: "GET",
 						data: {'id': id.value},
 						success: function(response) {
+							$("#book-container").append("<hr>");
+							$("#book-container").append("<img src='' class='center' id='cover'>");
 							$("#id_author").val(response.author);
 							$("#id_pages").val(response.pages);
 							$("#id_language").val(response.language);
@@ -36,6 +43,23 @@
 						loadingClass: "loading-circle",
 						}
 		});
+
+
+		jQuery.ajaxSetup({
+			beforeSend: function() {
+				$('#book-container').preloader({
+					text:'',
+					percent:'',
+					duration:'',
+					zIndex:'',
+					setRelative:false
+				});
+			},
+			complete: function() {
+				$('#book-container').preloader('remove');
+			}
+		});
+
 	})
 
 // TODO:

@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from .models import Book, Author
+from .models import Book, Author, Language
 from .forms import BookForm
 from django.contrib.auth.models import Permission
+from django.db.models import Value
+from django.db.models.functions import Concat
 import services
 
 from crispy_forms.helper import FormHelper
@@ -91,13 +92,14 @@ def search_per_id(request):
     if not book:
         return JsonResponse({})
     info = book['result'][0]['volumeInfo']
+    author = Author.objects.annotate(
+        author_name=Concat('first_name', Value(' '), 'last_name')).get(author_name__icontains=info['authors'][0])
     fields_to_show = {
-        'author': info['authors'][0],
+        'author': author.pk,
         'pages': info['pageCount'],
         'language': info['language'],
         'img_src': info['imageLinks']['smallThumbnail'],
     }
-
     return JsonResponse(fields_to_show)
 
 
