@@ -22,8 +22,6 @@ class Book(models.Model):
     cover_img = models.ImageField(
         upload_to=cover_upload_path, default='/cover/default_cover.jpeg', null=True)
 
-    # class Meta:
-    #   pass
     @property
     def available(self):
         return self.instances.filter(status='av').count() > 0
@@ -65,7 +63,7 @@ class BookInstance(models.Model):
     )
     unique_id = models.CharField(max_length=10)
     book = models.ForeignKey('books.Book', related_name='instances')
-    status = models.CharField(choices=STATES, max_length=20, default='av')
+    status = models.CharField(choices=STATES, max_length=20, default='res')
 
     def __unicode__(self):
         return '{} {}'.format(self.book, self.unique_id)
